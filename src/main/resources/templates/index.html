@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Liked Songs Exporter</title>
+    <style>
+        /* CSS for the loading overlay */
+        #loadingOverlay {
+            display: none; /* Hidden by default - THIS IS THE CORRECTED LINE */
+            position: fixed; /* Stays in place relative to the viewport */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+            z-index: 9999; /* Ensures it's on top of other content */
+            /* Removed 'display: flex;' from here */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            flex-direction: column; /* Stack content vertically */
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite; /* Simple spinning animation */
+            margin-bottom: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+<h1>Spotify Liked Songs Exporter</h1>
+<p>Click a button to download your liked songs.</p>
+
+<form action="/download/csv" method="get">
+    <button type="submit" id="downloadCsvBtn">Download as CSV</button>
+</form>
+
+<form action="/download/xml" method="get">
+    <button type="submit" id="downloadXmlBtn">Download as XML</button>
+</form>
+
+<div id="loadingOverlay">
+    <div class="spinner"></div>
+    <p>Downloading, please wait...</p>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get references to your buttons and the overlay
+        var downloadCsvBtn = document.getElementById('downloadCsvBtn');
+        var downloadXmlBtn = document.getElementById('downloadXmlBtn');
+        var loadingOverlay = document.getElementById('loadingOverlay');
+
+        function showLoading() {
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'flex'; // Make the overlay visible when needed
+            }
+        }
+
+        function hideLoading() {
+            if (loadingOverlay) {
+                setTimeout(function() {
+                    loadingOverlay.style.display = 'none';
+                }, 2000); // Adjust delay as needed (e.g., 2000ms = 2 seconds)
+            }
+        }
+
+        // Add event listeners to the download buttons
+        if (downloadCsvBtn) {
+            downloadCsvBtn.addEventListener('click', function() {
+                showLoading();
+                hideLoading(); // Call hide after a short delay
+            });
+        }
+
+        if (downloadXmlBtn) {
+            downloadXmlBtn.addEventListener('click', function() {
+                showLoading();
+                hideLoading(); // Call hide after a short delay
+            });
+        }
+    });
+</script>
+</body>
+</html>
